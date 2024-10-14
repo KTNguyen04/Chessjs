@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+.cell {
+  border: 1px solid black;
+
+  /* text-align: center; */
+  /* font-size: 5rem; */
+}
+
+.cell:not(:last-child) {
+  border-right: none;
+}
+
+div[class*="board-row"]:not(div[class*="board-row-1"]) div {
+  border-bottom: none;
+}
+
+div[class*="index"] {
+  text-align: end;
+  align-self: center;
+}
+
+.col-index div {
+  text-align: center;
+}
+
+.col-index {
+  margin-top: 0.4rem;
+}
+
+.cell div {
+  text-align: center;
+  color: black;
+}
