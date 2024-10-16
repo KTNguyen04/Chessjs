@@ -31,6 +31,18 @@ function enableDragDrop() {
   }
 
   domBoard.addEventListener("dragstart", (event) => {
+    let o_pos = event.target.id.slice(-2).split("");
+
+    console.log(o_pos);
+    let { row: o_row, col: o_col } = r_mapping(o_pos[0], o_pos[1]);
+    event.dataTransfer.setData("r", o_row);
+    event.dataTransfer.setData("c", o_col);
+    console.log(o_row, o_col);
+    board[o_row][o_col].possible_moves.forEach((p_move) => {
+      let p_cell = document.getElementById(p_move[0] + p_move[1]);
+      p_cell.style.backgroundColor = "#f9ff8e";
+    });
+
     event.dataTransfer.setData("id", event.target.id);
     event.target.style.opacity = "0.6";
   });
@@ -40,6 +52,34 @@ function enableDragDrop() {
   domBoard.addEventListener("dragover", (event) => {
     event.preventDefault();
   });
+  domBoard.addEventListener("dragenter", (event) => {
+    let o_row = event.dataTransfer.getData("r");
+    let o_col = event.dataTransfer.getData("c");
+    console.log(board[o_row][o_col].possible_moves);
+    console.log(event.target.id.split(""));
+    if (
+      board[o_row][o_col].possible_moves.some(
+        (p_move) =>
+          p_move[0] == event.target.id[0] && p_move[1] == event.target.id[1]
+      )
+    )
+      event.target.style.backgroundColor = "#f1ff00";
+  });
+
+  domBoard.addEventListener("dragleave", (event) => {
+    let o_row = event.dataTransfer.getData("r");
+    let o_col = event.dataTransfer.getData("c");
+    console.log(board[o_row][o_col].possible_moves);
+    console.log(event.target.id.split(""));
+    if (
+      board[o_row][o_col].possible_moves.some(
+        (p_move) =>
+          p_move[0] == event.target.id[0] && p_move[1] == event.target.id[1]
+      )
+    )
+      event.target.style.backgroundColor = "#f9ffae";
+  });
+
   domBoard.addEventListener("drop", (event) => {
     // event.preventDefault();
 
@@ -60,23 +100,26 @@ function enableDragDrop() {
       dragged_piece.setAttribute("id", "start" + target.id);
       let rc = target.id.split("");
 
-      console.log(target.id);
       let { row: c_row, col: c_col } = r_mapping(rc[0], rc[1]);
 
       board[c_row][c_col] = board[o_row][o_col];
       board[c_row][c_col].c_x = rc[0];
       board[c_row][c_col].c_y = rc[1];
+
+      board[o_row][o_col].possible_moves.forEach((p_move) => {
+        let p_cell = document.getElementById(p_move[0] + p_move[1]);
+        p_cell.style.backgroundColor = "";
+      });
       board[o_row][o_col] = null;
       renderPiece();
-      console.log(c_row, c_col);
-      console.log(board[c_row][c_col]);
     }
+
     moveHandler();
   });
-  // console.log(piece.dragStart);
-
-  // console.log(_cell_pieces);
 }
+// console.log(piece.dragStart);
+
+// console.log(_cell_pieces);
 
 function createBoard() {
   const board = Array(8)
@@ -210,7 +253,6 @@ function moveHandler() {
     for (let piece of row) {
       if (piece !== null) {
         defineWay(piece);
-        console.log(piece);
       }
     }
   }

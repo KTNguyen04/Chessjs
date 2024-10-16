@@ -36,3 +36,17 @@ div[class*="index"] {
   cursor: grabbing;
   user-select: none;
 }
+
+.row:nth-child(odd) .cell:nth-child(odd),
+.row:nth-child(even) .cell:nth-child(even) {
+  background-color: #aeb2b6;
+}
+
+.row:nth-child(odd) .cell:nth-child(odd):hover,
+.row:nth-child(even) .cell:nth-child(even):hover {
+  background-color: #999fa4;
+}
+.row:nth-child(odd) .cell:nth-child(even):hover,
+.row:nth-child(even) .cell:nth-child(odd):hover {
+  background-color: #e8e8e8;
+}
