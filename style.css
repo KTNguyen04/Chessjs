@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+.cell {
+  border: 1px solid black;
+
+  /* text-align: center; */
+  /* font-size: 5rem; */
+}
+
+.cell:not(:last-child) {
+  border-right: none;
+}
+
+div[class*="board-row"]:not(div[class*="board-row-1"]) div {
+  border-bottom: none;
+}
+
+div[class*="index"] {
+  text-align: end;
+  align-self: center;
+}
+
+.col-index div {
+  text-align: center;
+}
+
+.col-index {
+  margin-top: 0.4rem;
+}
+
+.cell div {
+  text-align: center;
+  color: rgb(5, 5, 5);
+  cursor: grabbing;
+  user-select: none;
+}
+
+.row:nth-child(odd) .cell:nth-child(odd),
+.row:nth-child(even) .cell:nth-child(even) {
+  background-color: #aeb2b6;
+}
+
+.row:nth-child(odd) .cell:nth-child(odd):hover,
+.row:nth-child(even) .cell:nth-child(even):hover {
+  background-color: #999fa4;
+}
+.row:nth-child(odd) .cell:nth-child(even):hover,
+.row:nth-child(even) .cell:nth-child(odd):hover {
+  background-color: #e8e8e8;
+}
