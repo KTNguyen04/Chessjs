@@ -2,12 +2,9 @@ import createPiece from "./chess_man.js";
 import { chooseWay } from "./chess_man.js";
 var board = createBoard();
 var domBoard = document.querySelector(".board");
-console.log(domBoard);
 function initBoard() {
   // console.log(board);
   renderPiece();
-  // board[1][0] = null;
-  defineWay(board[1][0]);
   moveHandler();
 
   // console.log(mapping(0, 1));
@@ -33,11 +30,9 @@ function enableDragDrop() {
   domBoard.addEventListener("dragstart", (event) => {
     let o_pos = event.target.id.slice(-2).split("");
 
-    console.log(o_pos);
     let { row: o_row, col: o_col } = r_mapping(o_pos[0], o_pos[1]);
     event.dataTransfer.setData("r", o_row);
     event.dataTransfer.setData("c", o_col);
-    console.log(o_row, o_col);
     board[o_row][o_col].possible_moves.forEach((p_move) => {
       let p_cell = document.getElementById(p_move[0] + p_move[1]);
       p_cell.style.backgroundColor = "#f9ff8e";
@@ -55,8 +50,6 @@ function enableDragDrop() {
   domBoard.addEventListener("dragenter", (event) => {
     let o_row = event.dataTransfer.getData("r");
     let o_col = event.dataTransfer.getData("c");
-    console.log(board[o_row][o_col].possible_moves);
-    console.log(event.target.id.split(""));
     if (
       board[o_row][o_col].possible_moves.some(
         (p_move) =>
@@ -69,8 +62,6 @@ function enableDragDrop() {
   domBoard.addEventListener("dragleave", (event) => {
     let o_row = event.dataTransfer.getData("r");
     let o_col = event.dataTransfer.getData("c");
-    console.log(board[o_row][o_col].possible_moves);
-    console.log(event.target.id.split(""));
     if (
       board[o_row][o_col].possible_moves.some(
         (p_move) =>
@@ -84,12 +75,12 @@ function enableDragDrop() {
     // event.preventDefault();
 
     let drag_id = event.dataTransfer.getData("id");
-    console.log(drag_id);
+
     let dragged_piece = document.getElementById(drag_id);
     let target = event.target;
 
     let o_pos = event.dataTransfer.getData("id").slice(-2).split("");
-    console.log("le", event.dataTransfer.getData("id"));
+
     let { row: o_row, col: o_col } = r_mapping(o_pos[0], o_pos[1]);
     // console.log(o_row, o_col);
     if (
@@ -112,6 +103,11 @@ function enableDragDrop() {
       });
       board[o_row][o_col] = null;
       renderPiece();
+    } else {
+      board[o_row][o_col].possible_moves.forEach((p_move) => {
+        let p_cell = document.getElementById(p_move[0] + p_move[1]);
+        p_cell.style.backgroundColor = "";
+      });
     }
 
     moveHandler();
