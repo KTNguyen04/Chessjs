@@ -70,10 +70,10 @@ const moves = {
     [...Array.from({ length: 7 }, (_, i) => [i + 1, i + 1])],
   ],
   rook: [
-    [...Array.from({ length: 7 }, (_, i) => [-i - 1, 0])], // Up
-    [...Array.from({ length: 7 }, (_, i) => [i + 1, 0])], // Down
-    [...Array.from({ length: 7 }, (_, i) => [0, -i - 1])], // Left
-    [...Array.from({ length: 7 }, (_, i) => [0, i + 1])], // Right
+    [...Array.from({ length: 7 }, (_, i) => [-i - 1, 0])],
+    [...Array.from({ length: 7 }, (_, i) => [i + 1, 0])],
+    [...Array.from({ length: 7 }, (_, i) => [0, -i - 1])],
+    [...Array.from({ length: 7 }, (_, i) => [0, i + 1])],
   ],
   bishop: [
     [...Array.from({ length: 7 }, (_, i) => [-i - 1, -i - 1])],
